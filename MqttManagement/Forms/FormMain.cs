@@ -37,24 +37,12 @@ namespace MqttManagement.Forms
 
             initialization();
 
-
-            /* 
-             dgvAnalog.Rows.Add("analog1", 0);
-             dgvAnalog.Rows.Add("analog4", 0);
-             dgvAnalog.Rows.Add("analog2", 0);
-
-             dgvDigital.Rows.Add("digital3", true);
-             dgvDigital.Rows.Add("digital1", false);
-             dgvDigital.Rows.Add("digital2", true);
-             */
             addDevices();
             displayDevices();
         }
 
         public void addDevices()
         {
-            //float valueAnalog = float.Parse(payload);
-            //bool valueDigital = bool.Parse(payload);
             systemState.analogDeviceList.Add(new Device<float>("3", "analog1"));
             systemState.analogDeviceList.Add(new Device<float>("9", "analog4"));
             systemState.analogDeviceList.Add(new Device<float>("14", "analog2"));
@@ -112,24 +100,9 @@ namespace MqttManagement.Forms
 
             if (e.ColumnIndex == dgvDigital.Columns["clmBtn"].Index)
             {
-                bool deger = Convert.ToBoolean(dgvDigital.CurrentRow.Cells[1].Value.ToString());
-
-                if (deger == false)
-                {
-                    deger = true;
-                    dgvDigital.CurrentRow.Cells[1].Value = deger;
-                    selectedIndex = dgvDigital.CurrentRow.Index;
-                    dgvDigital.CurrentRow.Cells[1].Style.BackColor = Color.Green;
-
-                }
-                else
-                {
-                    deger = false;
-                    dgvDigital.CurrentRow.Cells[1].Value = deger;
-                    selectedIndex = dgvDigital.CurrentRow.Index;
-                    dgvDigital.CurrentRow.Cells[1].Style.BackColor = Color.Red;
-
-                }
+                string currentValuStr = dgvDigital.CurrentRow.Cells[1].Value.ToString();
+                string deger = currentValuStr == "0" ? "1" : "0";
+                mqttObject.Publish_Application_Message(deger, dgvDigital.CurrentRow.Tag.ToString());
             }
 
         }
