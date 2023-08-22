@@ -50,7 +50,6 @@ namespace MqttManagement.MQTT
         
         public async Task Handle_Received_Application_Message()
         {
-
             var mqttFactory = new MqttFactory();
 
             mqttClient.ApplicationMessageReceivedAsync += e =>
@@ -58,8 +57,8 @@ namespace MqttManagement.MQTT
                 Console.WriteLine("Received application message.");
                 Console.WriteLine("topic: " + e.ApplicationMessage.Topic);
                 Console.WriteLine(Encoding.UTF8.GetString(e.ApplicationMessage.Payload));
-                var strArr = e.ApplicationMessage.Topic.Split('/');
-                var id = strArr[strArr.Length - 1];
+                var topic = e.ApplicationMessage.Topic.Split('/');
+                var id = topic[topic.Length - 1];
 
                 var strArrPayload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
 
@@ -110,7 +109,6 @@ namespace MqttManagement.MQTT
         public async Task Publish_Application_Message(string msg, string topic)
         {
             var mqttFactory = new MqttFactory();
-
             var applicationMessage = new MqttApplicationMessageBuilder()
                 .WithTopic("karatal2023fatmaproje/c/" + topic)
                 .WithPayload(msg)

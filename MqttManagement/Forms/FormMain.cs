@@ -34,7 +34,6 @@ namespace MqttManagement.Forms
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
-
             initialization();
 
             addDevices();
@@ -49,7 +48,6 @@ namespace MqttManagement.Forms
             systemState.digitalDeviceList.Add(new Device<bool>("13", "digital3"));
             systemState.digitalDeviceList.Add(new Device<bool>("15", "digital1"));
             systemState.digitalDeviceList.Add(new Device<bool>("16", "digital2"));
-
         }
 
         void displayDevices()
@@ -66,6 +64,7 @@ namespace MqttManagement.Forms
                 dgvAnalog.Rows.Add(objArr);
 
                 nRowIndex = dgvAnalog.Rows.Count - 1;
+                dgvAnalog.Rows[nRowIndex].Tag = ad.Topic;
                 topicDgvrDictionary.Add(ad.Topic.ToLower(), dgvAnalog.Rows[nRowIndex]);
             }
             foreach (var dd in systemState.digitalDeviceList)
@@ -74,6 +73,7 @@ namespace MqttManagement.Forms
                 objArr[1] = dd.Value;
                 dgvDigital.Rows.Add(objArr);
                 nRowIndex = dgvDigital.Rows.Count - 1;
+                dgvDigital.Rows[nRowIndex].Tag = dd.Topic;
                 topicDgvrDictionary.Add(dd.Topic.ToLower(), dgvDigital.Rows[nRowIndex]);
             }
         }
@@ -102,7 +102,7 @@ namespace MqttManagement.Forms
             {
                 string currentValuStr = dgvDigital.CurrentRow.Cells[1].Value.ToString();
                 string deger = currentValuStr == "0" ? "1" : "0";
-                mqttObject.Publish_Application_Message(deger, dgvDigital.CurrentRow.Tag.ToString());
+                mqttObject.Publish_Application_Message(deger, "dig/"+dgvDigital.CurrentRow.Tag.ToString());
             }
 
         }
