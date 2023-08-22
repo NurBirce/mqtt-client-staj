@@ -76,7 +76,7 @@ namespace MqttManagement.MQTT
                 foreach (var d in frm.systemState.analogDeviceList)
                 {
                     var mqttSubscribeOptions = new MqttTopicFilterBuilder()
-                    .WithTopic("karatal2023fatmaproje/" + d.Topic)
+                    .WithTopic("karatal2023fatmaproje/s/" + d.Topic)
                     .WithAtLeastOnceQoS()
                     .Build();
 
@@ -88,7 +88,7 @@ namespace MqttManagement.MQTT
                 foreach (var d in frm.systemState.digitalDeviceList)
                 {
                     var mqttSubscribeOptions = new MqttTopicFilterBuilder()
-                    .WithTopic("karatal2023fatmaproje/" + d.Topic)
+                    .WithTopic("karatal2023fatmaproje/s/" + d.Topic)
                     .WithAtLeastOnceQoS()
                     .Build();
 
@@ -112,7 +112,7 @@ namespace MqttManagement.MQTT
             var mqttFactory = new MqttFactory();
 
             var applicationMessage = new MqttApplicationMessageBuilder()
-                .WithTopic("karatal2023fatmaproje/" + topic)
+                .WithTopic("karatal2023fatmaproje/c/" + topic)
                 .WithPayload(msg)
                 .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                 .Build();
