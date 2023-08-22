@@ -1,5 +1,5 @@
 ﻿
-namespace MqttManagement.Forms
+namespace MqttClientStaj.Forms
 {
     partial class FormMain
     {

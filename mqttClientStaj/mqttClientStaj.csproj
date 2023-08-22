@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E0775E18-D49B-4322-8E1D-5D49D1EA79B6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>MqttManagement</RootNamespace>
-    <AssemblyName>MqttManagement</AssemblyName>
+    <RootNamespace>MqttClientStaj</RootNamespace>
+    <AssemblyName>MqttClientStaj</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -101,6 +101,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

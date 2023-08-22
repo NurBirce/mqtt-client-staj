@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MqttManagement.Forms;
+using MqttClientStaj.Forms;
 
-namespace MqttManagement
+namespace MqttClientStaj
 {
     static class Program
     {

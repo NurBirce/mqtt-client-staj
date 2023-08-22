@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MqttManagement.Models;
+using MqttClientStaj.Models;
 using System.Text;
 using System.Text.Json;
 using System.IO;
-using MqttManagement.MQTT;
+using MqttClientStaj.MQTT;
 using System.IO.Ports;
 
-namespace MqttManagement.Forms
+namespace MqttClientStaj.Forms
 {
     public partial class FormMain : Form
     {
@@ -64,21 +64,21 @@ namespace MqttManagement.Forms
                 dgvAnalog.Rows.Add(objArr);
 
                 nRowIndex = dgvAnalog.Rows.Count - 1;
-                dgvAnalog.Rows[nRowIndex].Tag = ad.Topic;
+                dgvAnalog.Rows[nRowIndex].Tag = ad;
                 topicDgvrDictionary.Add(ad.Topic.ToLower(), dgvAnalog.Rows[nRowIndex]);
             }
             foreach (var dd in systemState.digitalDeviceList)
             {
                 objArr[0] = dd.Name;
-                objArr[1] = dd.Value;
+                objArr[1] = dd.Value ? "ON" : "OFF";
                 dgvDigital.Rows.Add(objArr);
                 nRowIndex = dgvDigital.Rows.Count - 1;
-                dgvDigital.Rows[nRowIndex].Tag = dd.Topic;
+                dgvDigital.Rows[nRowIndex].Tag = dd;
                 topicDgvrDictionary.Add(dd.Topic.ToLower(), dgvDigital.Rows[nRowIndex]);
             }
         }
 
-        public void updateDevices(string topic, string value)
+        public void updateAnalogDevices(string topic, string value)
         {
             this.Invoke(new Action(() =>
             {
@@ -86,6 +86,19 @@ namespace MqttManagement.Forms
                 if (topicDgvrDictionary.TryGetValue(topic, out dgvR))
                 {
                     dgvR.Cells[1].Value = float.Parse(value);
+                }
+            }));
+        }
+        public void updateDigitalDevices(string topic, string value)
+        {
+            this.Invoke(new Action(() =>
+            {
+                DataGridViewRow dgvR;
+                if (topicDgvrDictionary.TryGetValue(topic, out dgvR))
+                {
+                    var d = (Device<bool>)dgvR.Tag;
+                    d.Value = value == "1" ? true : false;
+                    dgvR.Cells[1].Value = value == "1" ? "ON" : "OFF";
                 }
             }));
         }
@@ -101,8 +114,8 @@ namespace MqttManagement.Forms
             if (e.ColumnIndex == dgvDigital.Columns["clmBtn"].Index)
             {
                 string currentValuStr = dgvDigital.CurrentRow.Cells[1].Value.ToString();
-                string deger = currentValuStr == "0" ? "1" : "0";
-                mqttObject.Publish_Application_Message(deger, "dig/"+dgvDigital.CurrentRow.Tag.ToString());
+                var device = ((Device<bool>)dgvDigital.CurrentRow.Tag);
+                mqttObject.PublishDigital(!device.Value ? "1" : "0", device.Topic);
             }
 
         }
