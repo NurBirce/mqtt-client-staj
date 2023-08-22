@@ -83,12 +83,6 @@
     <Compile Include="Forms\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FormModel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FormModel.Designer.cs">
-      <DependentUpon>FormModel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\AnalogDevice.cs" />
     <Compile Include="Models\Device.cs" />
     <Compile Include="Models\DigitalDevice.cs" />

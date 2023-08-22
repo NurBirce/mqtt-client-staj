@@ -107,12 +107,12 @@ namespace MqttManagement.MQTT
             Handle_Received_Application_Message();
         }
 
-        public async Task Publish_Application_Message(string msg)
+        public async Task Publish_Application_Message(string msg, string topic)
         {
             var mqttFactory = new MqttFactory();
 
             var applicationMessage = new MqttApplicationMessageBuilder()
-                .WithTopic("karatal2023fatmaproje/3")
+                .WithTopic("karatal2023fatmaproje/" + topic)
                 .WithPayload(msg)
                 .WithQualityOfServiceLevel(MqttQualityOfServiceLevel.AtLeastOnce)
                 .Build();
